@@ -1,12 +1,18 @@
-
+#include "Class/Sensor.h"
+Sensor irSensor;
+int irSensorPIN = 2;
 void setup()
 {
-	pinMode(LED_BUILTIN, OUTPUT);
+	irSensor = Sensor(irSensorPIN, true, false);
+	Serial.begin(9600);
 }
 void loop()
 {
-	digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
-	delay(1000);					 // wait for a second
-	digitalWrite(LED_BUILTIN, LOW);	 // turn the LED off by making the voltage LOW
+	int value = irSensor.getValue();
+	if(value == 1)
+		Serial.println("No hay nada");
+	else
+		Serial.println("Hay algo");
+	
 	delay(1000);
 }

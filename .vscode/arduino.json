@@ -1,5 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "port": "COM3",
-    "sketch": "ParkingsSystemArduino.ino"
+    "sketch": "ParkingsSystemArduino.ino",
+    "programmer": "AVRISP mkII"
 }
