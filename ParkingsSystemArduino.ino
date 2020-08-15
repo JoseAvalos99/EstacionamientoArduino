@@ -1,28 +1,24 @@
-#include "Class/ServomotorSensor.h"
-// int irSensorPIN = 2;
-ServomotorSensor servo;
+#include "Class/ParkingLotSystem.h"
+ParkingLotSystem parking;
+ServomotorSensor servoEntry;
 void setup()
 {
-	//irSensor = Sensor(irSensorPIN, true, false);
 	Serial.begin(9600);
-	servo = ServomotorSensor(9, true, false);
+	// servoEntry = ServomotorSensor(4,true,false);
+	// servoEntry.attach();
+	parking = ParkingLotSystem();
+	parking.getServoEntry().attach();
 }
 void loop()
 {
-	for (int i = 0; i <= 190; i++)
-	{
-		// Desplazamos al ángulo correspondiente
-		servo.setGrades(i);
-		// Hacemos una pausa de 25ms
-		delay(25);
-	}
-
-	// Para el sentido negativo
-	for (int i = 189; i > 0; i--)
-	{
-		// Desplazamos al ángulo correspondiente
-		servo.setGrades(i);
-		// Hacemos una pausa de 25ms
-		delay(25);
-	}
+	// parking.main();
+	// parking.Move();
+	// Move();
+	parking.findBusyBoxes();
+	delay(1000);
+}
+void Move()
+{
+	servoEntry.rotateUp(180);
+	servoEntry.rotateDown(180, 1);
 }

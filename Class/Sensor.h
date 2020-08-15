@@ -13,7 +13,15 @@ public:
 	Sensor();
 
 	Sensor(int Pin, bool IsDigital, bool IsPWM);
-	
+	void isInput()
+	{
+		pinMode(pin, INPUT);
+	}
+	void isOutput()
+	{
+		pinMode(pin, OUTPUT);
+	}
+
 	int getValue()
 	{
 		int value = 0;
@@ -26,7 +34,7 @@ public:
 	}
 	void setValue(int value)
 	{
-		if(isDigital && !isPWM)
+		if (isDigital && !isPWM)
 			digitalWrite(pin, value);
 		else
 			analogWrite(pin, value);
@@ -34,14 +42,15 @@ public:
 	}
 	~Sensor();
 };
-Sensor::Sensor(){
-
+Sensor::Sensor()
+{
 }
-Sensor::Sensor(int Pin, bool IsDigital, bool IsPWM){
-	pin =Pin;
+Sensor::Sensor(int Pin, bool IsDigital, bool IsPWM)
+{
+	pin = Pin;
 	isDigital = IsDigital;
 	isPWM = IsPWM;
 }
-Sensor::~Sensor(){
-
+Sensor::~Sensor()
+{
 }

@@ -5,14 +5,14 @@ static unsigned int lastCentimeters = 0;
 class UltrasonicSensor : public Sensor
 {
 private:
-#define TRIGGER_PIN 05
-#define ECHO_PIN 04
+#define TRIGGER_PIN 07
+#define ECHO_PIN 08
 #define MAX_DISTANCE 200
 
     uint8_t trigger = 5;
-    int CONFIG_LEVEL_SENSOR_TRIG_PIN = 5;
+    int CONFIG_LEVEL_SENSOR_TRIG_PIN = 7;
     // configurar aqui el pin echo del sensor
-    int CONFIG_LEVEL_SENSOR_ECHO_PIN = 4;
+    int CONFIG_LEVEL_SENSOR_ECHO_PIN = 8;
     // configurar la distancia maxima a detectar
     long CONFIG_LEVEL_SENSOR_MAX_DISTANCE = 200;
     // configurar la capacidad máxima del recipiente
@@ -39,7 +39,7 @@ public:
 };
 
 UltrasonicSensor::UltrasonicSensor(/* args */)
-    : sonar(5, 4, 200)
+    : sonar(7, 8, 200)
     /**
      * 5 = TRIGGER_PIN
      * 4 = ECHO_PIN
@@ -48,7 +48,7 @@ UltrasonicSensor::UltrasonicSensor(/* args */)
 {
 }
 UltrasonicSensor::UltrasonicSensor(int Pin, bool IsDigital, bool IsPWM)
-    : sonar(5, 4, 200)
+    : sonar(7, 8, 200)
 {
     pin = Pin;
     isDigital = IsDigital;
