@@ -101,6 +101,7 @@ public:
             if (box1.isSomeOneThere())
             {
                 box1.isEmpty = false;
+                Serial.println("Caja 1 ocupada");
                 return 1;
             }
         }
@@ -109,6 +110,7 @@ public:
             if (box2.isSomeOneThere())
             {
                 box2.isEmpty = false;
+                Serial.println("Caja 2 ocupada");
                 return 2;
             }
         }
@@ -117,6 +119,7 @@ public:
             if (box3.isSomeOneThere())
             {
                 box3.isEmpty = false;
+                Serial.println("Caja 3 ocupada");
                 return 3;
             }
         }
@@ -128,24 +131,27 @@ public:
         if (!box1.isEmpty)
         {
             //¿El sensor marca algo?
-            if (box1.isSomeOneThere())
+            if (!box1.isSomeOneThere())
             {
                 box1.isEmpty = true;
+                Serial.println("Caja 1 vacia");
                 return 1;
             }
         }
         if (!box2.isEmpty)
         {
-            if (box2.isSomeOneThere())
+            if (!box2.isSomeOneThere())
             {
+                Serial.println("Caja 2 vacia");
                 box2.isEmpty = true;
                 return 2;
             }
         }
         if (!box3.isEmpty)
         {
-            if (box3.isSomeOneThere())
+            if (!box3.isSomeOneThere())
             {
+                Serial.println("Caja 3 vacia");
                 box3.isEmpty = true;
                 return 3;
             }

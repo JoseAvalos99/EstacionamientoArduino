@@ -8,7 +8,8 @@ private:
 public:
     ServomotorSensor(/* args */);
     ServomotorSensor(int Pin, bool IsDigital, bool IsPWM);
-    void attach(){
+    void attach()
+    {
         servoMotor.attach(pin);
     }
     void rotateUp(int gradesTotales)
@@ -27,8 +28,19 @@ public:
             delay(20);
         }
     }
-    void setGrades(int grades){
+    void setGrades(int grades)
+    {
         servoMotor.write(grades);
+    }
+    void mover()
+    {
+        servoMotor.write(0);
+        delay(1000);
+
+        servoMotor.write(90);
+        delay(1000);
+        servoMotor.write(180);
+        delay(1000);
     }
     ~ServomotorSensor();
 };
