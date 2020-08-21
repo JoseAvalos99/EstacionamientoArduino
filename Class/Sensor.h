@@ -1,3 +1,6 @@
+#include "SoftwareSerial.h"
+SoftwareSerial esp8266(2, 3); // RX, TX
+
 class Sensor
 {
 protected:

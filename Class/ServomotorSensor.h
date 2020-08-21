@@ -53,8 +53,8 @@ ServomotorSensor::ServomotorSensor(/* args */)
 ServomotorSensor::ServomotorSensor(int Pin, bool IsDigital, bool IsPWM)
     : servoMotor()
 {
-    // servoMotor.attach(pin);
     servoMotor.write(0);
+    // servoMotor.attach(pin);
     pin = Pin;
     isDigital = IsDigital;
     isPWM = IsPWM;

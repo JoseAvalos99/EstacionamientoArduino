@@ -12,7 +12,8 @@
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\standard",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\NewPing\\src",
                 "C:\\Program Files (x86)\\Arduino\\libraries\\SharpIR-master",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\Servo\\src"
+                "C:\\Program Files (x86)\\Arduino\\libraries\\Servo\\src",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\ArduinoJson\\src"
             ],
             "forcedInclude": [
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"

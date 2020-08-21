@@ -1,6 +1,7 @@
 #include "Sensor.h"
 #include "ServomotorSensor.h"
 #include "Box.h"
+static String lastParkingStatusMsg = "";
 
 class ParkingLotSystem
 {
@@ -11,8 +12,8 @@ private:
     Box box1;
     Box box2;
     Box box3;
-    int lastBoxBusy = 0;
-    int lastBoxEmpty = 0;
+
+    long timeWaiting = 0;
     int state = 0;
     /**
      * State = 0 Vacio
@@ -37,42 +38,24 @@ public:
             move(); // Mueve la  barra
             return;
         }
+        //Hay alguien en la salida
         if (isSomeoneAtTheExit())
         {
             move();
             return;
         }
-        if (state == 0)
-        {
-            int value = findBusyBoxes();
-            if (value == 0)
-                return;
-            else
-            {
-                lastBoxBusy = value;
-                state = 1;
-            }
-        }
-        else if (state == 1)
-        {
-            int value = findEmptyBoxes();
-            if (value == 0)
-            {
-                state = 0;
-                return;
-            }
-            else
-            {
-                lastBoxEmpty = value;
-                state = 1;
-            }
-        }
+        //Cuantas cajas tenemos llenas
+        findBusyBoxes();
+        //Cuantas cajas tenemos vacias
+        findEmptyBoxes();
+        //Enviar info a rabbit
+        updateData();
     }
     void move()
     {
-        servoEntry.rotateUp(130);
-        delay(1000);
-        servoEntry.rotateDown(130, 1);
+        servoEntry.rotateUp(100);
+        delay(2500);
+        servoEntry.rotateDown(100, 0);
     }
     bool isSomeoneAtTheEntry()
     {
@@ -102,7 +85,6 @@ public:
             {
                 box1.isEmpty = false;
                 Serial.println("Caja 1 ocupada");
-                return 1;
             }
         }
         if (box2.isEmpty)
@@ -111,7 +93,6 @@ public:
             {
                 box2.isEmpty = false;
                 Serial.println("Caja 2 ocupada");
-                return 2;
             }
         }
         if (box3.isEmpty)
@@ -120,7 +101,6 @@ public:
             {
                 box3.isEmpty = false;
                 Serial.println("Caja 3 ocupada");
-                return 3;
             }
         }
         return 0;
@@ -135,7 +115,6 @@ public:
             {
                 box1.isEmpty = true;
                 Serial.println("Caja 1 vacia");
-                return 1;
             }
         }
         if (!box2.isEmpty)
@@ -144,7 +123,6 @@ public:
             {
                 Serial.println("Caja 2 vacia");
                 box2.isEmpty = true;
-                return 2;
             }
         }
         if (!box3.isEmpty)
@@ -153,10 +131,29 @@ public:
             {
                 Serial.println("Caja 3 vacia");
                 box3.isEmpty = true;
-                return 3;
             }
         }
         return 0;
+    }
+    void updateData()
+    {
+        if (timeWaiting >= millis())
+            return;
+        String msgW = "[";
+        msgW += String(box1.isSomeOneThere()) + ",";
+        msgW += String(box2.isSomeOneThere()) + ",";
+        msgW += String(box3.isSomeOneThere()) + "";
+        msgW += "]";
+        if (msgW != lastParkingStatusMsg)
+        {
+            lastParkingStatusMsg = msgW;
+            delay(10);
+            Serial.println("ParkingSystemMsgRoutingKey|" + msgW);
+            // esp8266.println("ParkingSystemMsgRoutingKey|"+msgW);
+        }
+        else
+            Serial.println("");
+        timeWaiting = millis() + 5000;
     }
     ~ParkingLotSystem();
 };
@@ -164,6 +161,7 @@ public:
 ParkingLotSystem::ParkingLotSystem(/* args */)
 {
     servoEntry = ServomotorSensor(4, true, false);
+    // servoEntry.attach();
     irEntrySensor = Sensor(A0, false, false);
     irEntrySensor.isInput();
     irExitSensor = Sensor(A1, false, false);
