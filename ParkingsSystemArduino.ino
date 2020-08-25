@@ -40,6 +40,7 @@ void controlEsp8266()
 		else if (key == "openDoor")
 		{
 			parking.move();
+			Serial.println(value);
 			return;
 		}
 	}

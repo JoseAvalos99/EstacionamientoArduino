@@ -1,15 +1,17 @@
-class Box : public Sensor
+class Box 
 {
 private:
     /* data */
+    Sensor sensor;
 public:
     int number;
     bool isEmpty;
     Box(/* args */);
     Box(int Pin, bool IsDigital, bool IsPWM, int Number);
+    Sensor getSensor() { return sensor; }
     bool isSomeOneThere()
     {
-        if (getValue() < 100)
+        if (sensor.getValue() < 100)
         {
             return true;
         }
@@ -26,9 +28,7 @@ Box::Box(/* args */)
 }
 Box::Box(int Pin, bool IsDigital, bool IsPWM, int Number)
 {
-    pin = Pin;
-    isDigital = IsDigital;
-    isPWM = IsPWM;
+    sensor = Sensor(Pin, IsDigital, IsPWM);
     isEmpty = true;
     number = number;
 }

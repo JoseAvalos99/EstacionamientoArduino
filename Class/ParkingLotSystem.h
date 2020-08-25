@@ -24,9 +24,9 @@ public:
     ParkingLotSystem(/* args */);
     Sensor getSensorEntry() { return irEntrySensor; }
     Sensor getSensorExit() { return irExitSensor; }
-    Sensor getBox1() { return box1; }
-    Sensor getBox2() { return box2; }
-    Sensor getBox3() { return box3; }
+    Box getBox1() { return box1; }
+    Box getBox2() { return box2; }
+    Box getBox3() { return box3; }
     ServomotorSensor getServoEntry() { return servoEntry; }
 
     void main()
@@ -53,9 +53,9 @@ public:
     }
     void move()
     {
-        servoEntry.rotateUp(100);
+        servoEntry.rotateUp(120);
         delay(2500);
-        servoEntry.rotateDown(100, 0);
+        servoEntry.rotateDown(120, 1);
     }
     bool isSomeoneAtTheEntry()
     {
@@ -149,7 +149,7 @@ public:
             lastParkingStatusMsg = msgW;
             delay(10);
             Serial.println("ParkingSystemMsgRoutingKey|" + msgW);
-            // esp8266.println("ParkingSystemMsgRoutingKey|"+msgW);
+            esp8266.println("ParkingSystemMsgRoutingKey|"+msgW);
         }
         else
             Serial.println("");
@@ -168,15 +168,13 @@ ParkingLotSystem::ParkingLotSystem(/* args */)
     irExitSensor.isInput();
 
     box1 = Box(A2, false, false, 1);
-    box1.isInput();
+    box1.getSensor().isInput();
 
     box2 = Box(A3, false, false, 2);
-    box2.isInput();
+    box2.getSensor().isInput();
 
     box3 = Box(A4, false, false, 2);
-    box3.isInput();
-
-    // servoEntry.attach();
+    box3.getSensor().isInput();
 }
 
 ParkingLotSystem::~ParkingLotSystem()
